@@ -27,10 +27,46 @@ tetris.fillCells = function(coordinates,fillColor){
 	}
 }
 
+//Move current shape
+tetris.move = function(direction){
+	var reverse = false;
+	this.fillCells(this.currentCoor,'');
+	
+	for(var i=0;i<this.currentCoor.length;i++){
+		if(direction === 'right'){
+			this.currentCoor[i].col++;
+			if(this.currentCoor[i].col>9){
+				reverse = true;
+			}
+		} else if (direction === 'left'){
+			this.currentCoor[i].col--;
+			if(this.currentCoor[i].col<0){
+				reverse = true;
+			}
+		}
+	}
+	this.fillCells(this.currentCoor,'black');
+
+	if(reverse && direction === 'left'){
+		this.move('right');
+	} else if (reverse && direction === 'right'){
+		this.move('left');
+	}
+}
+
 
 $(document).ready(function(){
 	
 	tetris.drawPlayField();
 	tetris.fillCells(tetris.currentCoor,'black');
+
+	$(document).keydown(function(e){
+		console.log(e.keyCode);
+		if(e.keyCode === 39){
+			tetris.move('right');
+		} else if (e.keyCode === 37){
+			tetris.move('left');
+		}
+	})
 
 })
