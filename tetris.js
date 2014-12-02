@@ -11,10 +11,9 @@ tetris.drawPlayField = function(){
 }
 
 //Variable to store current coordiates
-tetris.currentCoor = [{row:1,col:1},
-											{row:1,col:2},
-											{row:2,col:1},
-											{row:2,col:2}];
+tetris.origin = {row:5,col:5};
+tetris.currentShape = 'L';
+tetris.currentCoor;
 
 
 //Fill the cells
@@ -54,10 +53,30 @@ tetris.move = function(direction){
 	}
 }
 
+//
+tetris.shapeToCoor = function(shape,origin){
+	if(shape === 'L'){
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row+1,col:origin.col},{row:origin.row+1,col:origin.col+1}]
+	} else if(shape === 'J'){
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row+1,col:origin.col},{row:origin.row+1,col:origin.col-1}]
+	} else if(shape === 'I'){
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row-2,col:origin.col},{row:origin.row+1,col:origin.col}]
+	} else if(shape === 'O'){
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row-1,col:origin.col+1},{row:origin.row,col:origin.col+1}]
+	} else if(shape === 'S'){
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row,col:origin.col-1},{row:origin.row-1,col:origin.col+1}]
+	} else if(shape === 'T'){
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row,col:origin.col-1},{row:origin.row,col:origin.col+1}]
+	} else if(shape === 'Z'){
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row-1,col:origin.col-1},{row:origin.row,col:origin.col+1}]
+	}
+}
+
 
 $(document).ready(function(){
 	
 	tetris.drawPlayField();
+	tetris.currentCoor = tetris.shapeToCoor(tetris.currentShape,tetris.origin);
 	tetris.fillCells(tetris.currentCoor,'black');
 
 	$(document).keydown(function(e){
