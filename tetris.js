@@ -53,11 +53,59 @@ tetris.move = function(direction){
 	}
 }
 
-//
+//Rotate current shape
+tetris.rotate = function(){
+	var reverse = false;
+	this.fillCells(this.currentCoor,'');
+
+	if(this.currentShape === 'L'){
+		this.currentShape = 'L90';
+	} else if(this.currentShape === 'L90'){
+		this.currentShape = 'L180';
+	} else if(this.currentShape === 'L180'){
+		this.currentShape = 'L270';
+	} else if(this.currentShape === 'L270'){
+		this.currentShape = 'L';
+	} else if(this.currentShape === 'J'){
+		this.currentShape = 'J90';
+	} else if(this.currentShape === 'J90'){
+		this.currentShape = 'J180';
+	} else if(this.currentShape === 'J180'){
+		this.currentShape = 'J270';
+	} else if(this.currentShape === 'J270'){
+		this.currentShape = 'J';
+	} else if(this.currentShape === 'I'){
+		this.currentShape = 'I90';
+	} else if(this.currentShape === 'I90'){
+		this.currentShape = 'I';
+	} else if(this.currentShape === 'S'){
+		this.currentShape = 'S90';
+	} else if(this.currentShape === 'S90'){
+		this.currentShape = 'S';
+	} else if(this.currentShape === 'Z'){
+		this.currentShape = 'Z90';
+	} else if(this.currentShape === 'Z90'){
+		this.currentShape = 'Z';
+	} else if(this.currentShape === 'T'){
+		this.currentShape = 'T90';
+	} else if(this.currentShape === 'T90'){
+		this.currentShape = 'T180';
+	} else if(this.currentShape === 'T180'){
+		this.currentShape = 'T270';
+	} else if(this.currentShape === 'T270'){
+		this.currentShape = 'T';
+	}
+
+	this.currentCoor = this.shapeToCoor(this.currentShape,this.origin);
+
+	this.fillCells(this.currentCoor,'black');
+}
+
+//Define all shapes
 tetris.shapeToCoor = function(shape,origin){
 	if(shape === 'L'){
 		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row+1,col:origin.col},{row:origin.row+1,col:origin.col+1}]
-	} else if(shape === 'J'){
+	} else if(shape === 'J'){ 
 		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row+1,col:origin.col},{row:origin.row+1,col:origin.col-1}]
 	} else if(shape === 'I'){
 		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row-2,col:origin.col},{row:origin.row+1,col:origin.col}]
@@ -69,7 +117,31 @@ tetris.shapeToCoor = function(shape,origin){
 		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row,col:origin.col-1},{row:origin.row,col:origin.col+1}]
 	} else if(shape === 'Z'){
 		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row-1,col:origin.col-1},{row:origin.row,col:origin.col+1}]
-	}
+	} else if(shape === 'L90'){
+  	return [{row:origin.row,col:origin.col},{row:origin.row,col:origin.col+1},{row:origin.row,col:origin.col-1},{row:origin.row+1,col:origin.col-1}];
+  } else if(shape === 'L180'){
+  	return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row+1,col:origin.col},{row:origin.row-1,col:origin.col-1}];
+  } else if(shape === 'L270'){
+  	return [{row:origin.row,col:origin.col},{row:origin.row,col:origin.col+1},{row:origin.row,col:origin.col-1},{row:origin.row-1,col:origin.col+1}];
+  } else if(shape === 'J90'){ 
+		return [{row:origin.row,col:origin.col},{row:origin.row,col:origin.col-1},{row:origin.row,col:origin.col+1},{row:origin.row-1,col:origin.col-1}]
+	} else if(shape === 'J180'){ 
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row+1,col:origin.col},{row:origin.row-1,col:origin.col+1}]
+	} else if(shape === 'J270'){ 
+		return [{row:origin.row,col:origin.col},{row:origin.row,col:origin.col-1},{row:origin.row,col:origin.col+1},{row:origin.row+1,col:origin.col+1}]
+	} else if(shape === 'I90'){
+		return [{row:origin.row,col:origin.col},{row:origin.row,col:origin.col-1},{row:origin.row,col:origin.col+1},{row:origin.row,col:origin.col+2}]
+	} else if(shape === 'S90'){
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row-1,col:origin.col-1},{row:origin.row-2,col:origin.col-1}]
+	} else if(shape === 'Z90'){
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row-1,col:origin.col+1},{row:origin.row-2,col:origin.col+1}]
+	} else if(shape === 'T90'){
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row+1,col:origin.col},{row:origin.row,col:origin.col+1}]
+	} else if(shape === 'T180'){
+		return [{row:origin.row,col:origin.col},{row:origin.row+1,col:origin.col},{row:origin.row,col:origin.col-1},{row:origin.row,col:origin.col+1}]
+	} else if(shape === 'T270'){
+		return [{row:origin.row,col:origin.col},{row:origin.row-1,col:origin.col},{row:origin.row+1,col:origin.col},{row:origin.row,col:origin.col-1}]
+	} 
 }
 
 
@@ -85,6 +157,8 @@ $(document).ready(function(){
 			tetris.move('right');
 		} else if (e.keyCode === 37){
 			tetris.move('left');
+		} else if (e.keyCode === 38){
+			tetris.rotate();
 		}
 	})
 
