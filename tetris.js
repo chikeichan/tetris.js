@@ -12,7 +12,7 @@ tetris.drawPlayField = function(){
 
 //Variable to store current coordiates
 tetris.origin = {row:5,col:5};
-tetris.currentShape = 'L';
+tetris.currentShape = 'I';
 tetris.currentCoor;
 
 
@@ -159,6 +159,29 @@ tetris.shapeToCoor = function(shape,origin){
 	} 
 }
 
+//Drop shape by one row
+tetris.drop = function(){
+	var reverse = false;
+
+	this.fillCells(this.currentCoor,'');
+	this.origin.row++;
+	for(var i=0;i<this.currentCoor.length;i++){
+		this.currentCoor[i].row++;
+		if(this.currentCoor[i].row>21){
+			reverse = true;
+		}
+	}
+
+	if(reverse){
+		for(var i=0;i<this.currentCoor.length;i++){
+			this.currentCoor[i].row--;
+		}
+		this.origin.row--;
+	}
+
+	this.fillCells(this.currentCoor,'black');
+}
+
 
 $(document).ready(function(){
 	
@@ -174,7 +197,13 @@ $(document).ready(function(){
 			tetris.move('left');
 		} else if (e.keyCode === 38){
 			tetris.rotate();
+		} else if (e.keyCode === 40){
+			tetris.drop();
 		}
 	})
+
+	var gravity = setInterval(function(){
+		tetris.drop();
+	},500);
 
 })
