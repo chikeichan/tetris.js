@@ -11,7 +11,7 @@ tetris.drawPlayField = function(){
 }
 
 //Variable to store current coordiates
-tetris.origin = {row:5,col:5};
+tetris.origin = {row:2,col:5};
 tetris.currentShape = 'I';
 tetris.currentCoor;
 
@@ -180,6 +180,19 @@ tetris.drop = function(){
 	}
 
 	this.fillCells(this.currentCoor,'black');
+
+	if(reverse){
+		this.spawn();
+	}
+}
+
+//Spawn random shape
+tetris.spawn = function(){
+	var random = Math.floor(Math.random()*7);
+	var shapeArray = ['L','J','I','O','S','T','Z'];
+	this.currentShape = shapeArray[random];
+	this.origin = {row:2,col:5};
+	this.currentCoor = this.shapeToCoor(this.currentShape,this.origin);
 }
 
 
@@ -201,7 +214,7 @@ $(document).ready(function(){
 			tetris.drop();
 		}
 	})
-
+8
 	var gravity = setInterval(function(){
 		tetris.drop();
 	},500);
