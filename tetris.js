@@ -28,22 +28,7 @@ tetris.fillCells = function(coordinates,fillColor){
 
 //Move current shape
 tetris.move = function(direction){
-	var reverse = false;
 	this.fillCells(this.currentCoor,'');
-	
-	for(var i=0;i<this.currentCoor.length;i++){
-		if(direction === 'right'){
-			this.currentCoor[i].col++;
-			if(this.currentCoor[i].col>9){
-				reverse = true;
-			}
-		} else if (direction === 'left'){
-			this.currentCoor[i].col--;
-			if(this.currentCoor[i].col<0){
-				reverse = true;
-			}
-		}
-	}
 
 	//move origin
 	if(direction === 'right'){
@@ -52,13 +37,19 @@ tetris.move = function(direction){
 		this.origin.col--;
 	}
 
-	this.fillCells(this.currentCoor,'black');
+	this.currentCoor = this.shapeToCoor(this.currentShape,this.origin);
 
-	if(reverse && direction === 'left'){
-		this.move('right');
-	} else if (reverse && direction === 'right'){
-		this.move('left');
+	if(this.ifReverse()){
+		if(direction === 'right'){
+			this.origin.col--;
+		} else if (direction === 'left'){
+			this.origin.col++;
+		}
 	}
+
+	this.currentCoor = this.shapeToCoor(this.currentShape,this.origin);
+
+	this.fillCells(this.currentCoor,'black');
 }
 
 //Rotate current shape
@@ -107,7 +98,7 @@ tetris.rotate = function(){
 	this.currentCoor = this.shapeToCoor(this.currentShape,this.origin);
 
 	for(var i=0;i<this.currentCoor.length;i++){
-		if(this.currentCoor[i].col>9 || this.currentCoor[i].col<0){
+		if(this.ifReverse()){
 			this.currentShape = lastShape;
 		}
 	}
@@ -167,7 +158,7 @@ tetris.drop = function(){
 	this.origin.row++;
 	for(var i=0;i<this.currentCoor.length;i++){
 		this.currentCoor[i].row++;
-		if(this.currentCoor[i].row>21){
+		if(this.ifReverse()){
 			reverse = true;
 		}
 	}
@@ -182,6 +173,7 @@ tetris.drop = function(){
 	this.fillCells(this.currentCoor,'black');
 
 	if(reverse){
+		this.fillCells(this.currentCoor,'BLACK');
 		this.spawn();
 	}
 }
@@ -193,6 +185,19 @@ tetris.spawn = function(){
 	this.currentShape = shapeArray[random];
 	this.origin = {row:2,col:5};
 	this.currentCoor = this.shapeToCoor(this.currentShape,this.origin);
+}
+
+//If we need to reverse
+tetris.ifReverse = function(){
+	for(var i=0;i<this.currentCoor.length;i++){
+		var row = this.currentCoor[i].row;
+		var col = this.currentCoor[i].col;
+		var $coor = $('.'+row).find('#'+col);
+		if($coor.length === 0 || $coor.attr('bgcolor') === 'BLACK'){
+			return true;
+		}
+	}
+	return false;
 }
 
 
