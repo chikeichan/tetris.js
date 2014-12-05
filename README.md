@@ -2,7 +2,8 @@ tetris.js
 =========
 
 Learn Javascript and JQuery by Re-building Tetris<br>
-<a href='https://chikeichan.wordpress.com/tag/tetris-js'>Full Tutorials Here</a>
+<a href='https://chikeichan.wordpress.com/tag/tetris-js'>Full Tutorials Here</a><br>
+<a href='http://rawgit.com/chikeichan/tetris.js/master/index.html'>Demo Here</a>
 
 <p>While preparing for Hack Reactor's admission interview as a newbie in programming, 
 I challenged myself to re-build the classic game tetris using Javascript and some JQuery.
@@ -24,5 +25,7 @@ and this has definitely help me getting accepted by Hack Reactor. If you are new
   <li>Adding Gravity</li>
   <li>Spawn New Shape</li>
   <li>Fixing More Bug</li>
+  <a href='https://chikeichan.wordpress.com/2014/12/04/tetris-js-implementation-of-tetris-using-javascript-and-jquery-part-iv/'>Part IV</a>
+  <li>Empty Full Row</li>
 </ol>
   

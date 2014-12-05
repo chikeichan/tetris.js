@@ -233,7 +233,6 @@ $(document).ready(function(){
 	tetris.fillCells(tetris.currentCoor,'black');
 
 	$(document).keydown(function(e){
-		console.log(e.keyCode);
 		if(e.keyCode === 39){
 			tetris.move('right');
 		} else if (e.keyCode === 37){
