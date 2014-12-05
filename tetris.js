@@ -174,8 +174,10 @@ tetris.drop = function(){
 
 	if(reverse){
 		this.fillCells(this.currentCoor,'BLACK');
+		this.emptyFullRow();
 		this.spawn();
 	}
+
 }
 
 //Spawn random shape
@@ -200,9 +202,32 @@ tetris.ifReverse = function(){
 	return false;
 }
 
+//Empty full row
+tetris.emptyFullRow = function(){
+	var drops = 0;
+	for (var i=21; i>=0;i--){
+		var rowIsFull = true;
+
+		for (var j=0;j<10;j++){
+			var $coor = $('.'+i).find('#'+j);
+			if($coor.attr('bgcolor')!=='BLACK'){
+				rowIsFull = false;
+			}
+
+			if(drops>0){
+				var $newCoor = $('.'+(i+drops)).find('#'+j);
+				$newCoor.attr('bgcolor',$coor.attr('bgcolor'));
+			}
+		}
+
+		if(rowIsFull){
+			drops++;
+		}
+	}
+}
+
 
 $(document).ready(function(){
-	
 	tetris.drawPlayField();
 	tetris.currentCoor = tetris.shapeToCoor(tetris.currentShape,tetris.origin);
 	tetris.fillCells(tetris.currentCoor,'black');
